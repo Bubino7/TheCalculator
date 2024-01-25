@@ -86,3 +86,10 @@ body {
         margin-top: 50px;
     }
 }
+
+@media (max-width: 576px) {
+    #calculator {
+        width: 350px;
+        height: 450px;
+    }
+}

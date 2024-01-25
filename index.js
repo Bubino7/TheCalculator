@@ -57,9 +57,6 @@ $(document).on("keypress", function (event) {
     var pressedValue = event.key;
 
     pressButton(pressedValue);
-
-
-    console.log(event);
 });
 
 // functions
