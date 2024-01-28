@@ -4,7 +4,8 @@ var calculator = {
     number1: 0,
     number2: 0, 
     currentNumber: "",
-    currentOperator: ""
+    currentOperator: "",
+    lastResult: ""
 };
 
 $("#answer").text(calculator.currentNumber);
@@ -16,18 +17,29 @@ $(".el").click(function () {
     var valueOfId = $("#" + pressedValue).text();
     $("#" + pressedValue).fadeOut(50).fadeIn(50);
     
-    if  ( $("#" + pressedValue).hasClass("number") === true ) {
+    if  ( $("#" + pressedValue).hasClass("number") === true ) {     // click on Number button
         clicked(valueOfId);
     } 
-    else if ( $("#" + pressedValue).hasClass("operator") === true ) {
-        calculator.number1 = parseFloat(calculator.currentNumber);
-        calculator.currentNumber = "";
-        calculator.currentOperator = valueOfId;
+    else if ( $("#" + pressedValue).hasClass("operator") === true ) {       // click on Operator button
+        if ( (calculator.lastResult === "") === true ) {
+            calculator.number1 = parseFloat(calculator.currentNumber);
+            calculator.currentNumber = "";
+            calculator.currentOperator = valueOfId;
 
-        $("#answer").text(calculator.currentNumber);
-        $("#answer2").text(calculator.currentOperator);
+            $("#answer").text(calculator.currentNumber);
+            $("#answer2").text(calculator.currentOperator);
+        }
+        else if ( (calculator.lastResult === "") === false ) {
+            calculator.number1 = parseFloat(calculator.lastResult);
+            calculator.currentNumber = "";
+            calculator.currentOperator = valueOfId;
+            calculator.lastResult = "";
+
+            $("#answer").text(calculator.currentNumber);
+            $("#answer2").text(calculator.currentOperator);
+        }
     }
-    else if ( $("#" + pressedValue).hasClass("equalTo") === true ) {
+    else if ( $("#" + pressedValue).hasClass("equalTo") === true ) {        // click on Equals button
         if ( (calculator.currentOperator === "") === false && (calculator.currentNumber === "") === false ) {
             calculator.number2 = parseFloat(calculator.currentNumber);
             calculator.currentNumber = "";
@@ -41,7 +53,7 @@ $(".el").click(function () {
             equals(calculator.number1, calculator.number1, kindOfOperator);
         } else {}        
     }
-    else if ( $("#" + pressedValue).hasClass("clear") === true ) {
+    else if ( $("#" + pressedValue).hasClass("clear") === true ) {      // click on AC button
         calculator.number1 = 0;
         calculator.number2 = 0; 
         calculator.currentNumber = "";
@@ -71,29 +83,30 @@ function equals (num1, num2, operator) {
     calculator.number1 = 0;
     calculator.number2 = 0;
     calculator.currentOperator = "";
+    calculator.lastResult = "";
 
     $("#answer2").text(calculator.currentOperator);
     
     switch (operator) {
         case operator = "+": 
             var result = num1 + num2;
-            calculator.currentNumber = result.toString();
-            return $("#answer").text(calculator.currentNumber)
+            calculator.lastResult = result.toString();
+            return $("#answer").text(calculator.lastResult)
         break;
         case operator = "-":
             var result = num1 - num2;
-            calculator.currentNumber = result.toString();
-            return $("#answer").text(calculator.currentNumber)
+            calculator.lastResult = result.toString();
+            return $("#answer").text(calculator.lastResult)
         break;
         case operator = "x":
             var result = num1 * num2;
-            calculator.currentNumber = result.toString();
-            return $("#answer").text(calculator.currentNumber)
+            calculator.lastResult = result.toString();
+            return $("#answer").text(calculator.lastResult)
         break;
         case operator = "/":
             var result = num1 / num2;
-            calculator.currentNumber = result.toString();
-            return $("#answer").text(calculator.currentNumber)
+            calculator.lastResult = result.toString();
+            return $("#answer").text(calculator.lastResult)
         break;
         default:
     }
@@ -102,6 +115,7 @@ function equals (num1, num2, operator) {
 function pressButton (key) {
 
     switch (key) {
+        // numbers
         case "0":
             $("#zero").fadeOut(50).fadeIn(50);
             var valueOfId = $("#zero").text();
@@ -158,6 +172,7 @@ function pressButton (key) {
             clicked(valueOfId);
         break;
 
+        // operators
         case "+":
             $("#sum").fadeOut(50).fadeIn(50);
             calculator.number1 = parseFloat(calculator.currentNumber);
@@ -195,6 +210,7 @@ function pressButton (key) {
             $("#answer2").text(calculator.currentOperator);
         break;
 
+        // equals to
         case "Enter" || "=":
             $("#equals").fadeOut(50).fadeIn(50); 
 
