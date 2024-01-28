@@ -18,6 +18,7 @@ $(".el").click(function () {
     $("#" + pressedValue).fadeOut(50).fadeIn(50);
     
     if  ( $("#" + pressedValue).hasClass("number") === true ) {     // click on Number button
+        calculator.lastResult = "";
         clicked(valueOfId);
     } 
     else if ( $("#" + pressedValue).hasClass("operator") === true ) {       // click on Operator button
@@ -58,6 +59,7 @@ $(".el").click(function () {
         calculator.number2 = 0; 
         calculator.currentNumber = "";
         calculator.currentOperator = "";
+        calculator.lastResult = "";
         $("#answer").text(calculator.currentNumber);
         $("#answer2").text(calculator.currentOperator);
     }

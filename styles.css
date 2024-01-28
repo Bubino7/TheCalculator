@@ -63,6 +63,12 @@ body {
     padding-left: 0;
 }
 
+#negative-number {
+    font-weight: 750;
+    font-size: 2em;
+    color: grey;
+}
+
 #footer {
     font-weight: 700;
     color: #DBE7C9;
